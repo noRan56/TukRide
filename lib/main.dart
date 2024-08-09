@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:tuk_ride/Driver/driver_license.dart';
+import 'package:tuk_ride/Driver/edit_profile.dart';
 import 'package:tuk_ride/Maps/Ride_Booking.dart';
 import 'package:tuk_ride/Maps/Schedule_Ride.dart';
+import 'package:tuk_ride/NavBar/schudule.dart';
 import 'package:tuk_ride/OTP/OTP-Pages.dart';
 import 'package:tuk_ride/NavBar/NavBar.dart';
 import 'package:tuk_ride/Maps/home.dart';
 import 'package:tuk_ride/Passenger/AccountMenu.dart';
+import 'package:tuk_ride/Passenger/changepass.dart';
+import 'package:tuk_ride/Passenger/confirm_ride.dart';
+import 'package:tuk_ride/Passenger/driver_details.dart';
+import 'package:tuk_ride/Passenger/driving_Io_distance.dart';
+import 'package:tuk_ride/Passenger/feedback.dart';
 import 'package:tuk_ride/Passenger/payment.dart';
 import 'package:tuk_ride/Passenger/paymentCard.dart';
+import 'package:tuk_ride/Passenger/profial.dart';
 import 'package:tuk_ride/Passenger/settings.dart';
 import 'package:tuk_ride/Sign/enableLocationAccess.dart';
 import 'package:tuk_ride/Sign/forgetPassword.dart';
@@ -15,6 +24,7 @@ import 'package:tuk_ride/Sign/sign_in.dart';
 import 'package:tuk_ride/Sign/start.dart';
 import 'package:tuk_ride/Sign/verificationSuccessful.dart';
 import 'package:tuk_ride/Sign/verifyCode.dart';
+import 'package:tuk_ride/presentation_layer/Screen/TripsHistory.dart';
 import 'package:tuk_ride/presentation_layer/Screen/notifications_screen.dart';
 import 'package:tuk_ride/splashScreen.dart';
 
@@ -34,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: OnboardingScreen(),
+        home: SplashScreen(),
         theme: ThemeData(
           fontFamily: 'MPLUSRounded1c',
           textTheme: TextTheme(
@@ -62,7 +72,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         routes: {
-          'splash': (context) => splashScreen(),
+          'splash': (context) => SplashScreen(),
           'signIn': (context) => SignInScreen(),
           'onboardingScreen': (context) => OnboardingScreen(),
           'chooseToStart': (context) => StartSignUp(),
@@ -80,6 +90,15 @@ class _MyAppState extends State<MyApp> {
           'setting': (context) => SettingsScreen(),
           'notification': (context) => NotificationsScreen(),
           'homePassenger': (context) => MyHome(),
+          'ChangePasswordPage': (context) => ChangePasswordPage(),
+          'ConfirmRide': (context) => ConfirmRide(),
+          "history": (context) => TripsHistoryPage(),
+          "profial": (context) => Profial(),
+          "editProfial": (context) => EditProfilePage(),
+          "driverLicense": (context) => DriverLicenseScreen(),
+          "driverdetails": (context) => DriverDetailsPage(),
+          "driverToDistance": (context) => DrivingToDistance(),
+          "feedback": (context) => FeedbackPage()
         });
   }
 }

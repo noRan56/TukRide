@@ -132,13 +132,13 @@ class _MyHomeState extends State<MyHome> {
                   ),
                   IconButton(
                     icon: Image.asset(
-                      'assets/images/notification.png',
-                      width: 25,
-                      height: 25,
-                      color: MyColor.myYellow,
+                      'assets/images/notificationMap.png',
+                      width: 60,
+                      height: 60,
                     ),
                     onPressed: () {
-                      print("Notification button pressed");
+                      Navigator.of(context)
+                          .pushReplacementNamed('notification');
                     },
                   ),
                 ],
@@ -151,11 +151,11 @@ class _MyHomeState extends State<MyHome> {
         padding: const EdgeInsets.only(bottom: 50.0),
         child: Container(
           child: SizedBox(
-            width: 40,
-            height: 40,
+            width: 24,
+            height: 24,
             child: FloatingActionButton(
               child: Image.asset(
-                'assests/images/ic_Location.png',
+                'assets/images/ic_Location.png',
                 fit: BoxFit.cover,
               ),
               shape: RoundedRectangleBorder(

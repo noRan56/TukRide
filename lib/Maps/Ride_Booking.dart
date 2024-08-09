@@ -124,10 +124,10 @@ class LocationSection extends StatelessWidget {
             child: Divider(color: Colors.grey),
           ),
           LocationRow(
-            label: 'DROP-OFF',
-            location: 'Shibin El Kom',
-            icon: Image.asset('assets/images/pin.png', width: 24, height: 24),
-          ),
+              label: 'DROP-OFF',
+              location: 'Shibin El Kom',
+              icon: Image.asset('assets/images/pin.png', width: 24, height: 24),
+              img: Image.asset('assets/images/icon-close-alt.png')),
         ],
       ),
     );
@@ -138,11 +138,13 @@ class LocationRow extends StatelessWidget {
   final String label;
   final String location;
   final Widget icon;
+  final Widget? img;
 
   const LocationRow({
     required this.label,
     required this.location,
     required this.icon,
+    this.img,
   });
   @override
   Widget build(BuildContext context) {
@@ -159,8 +161,11 @@ class LocationRow extends StatelessWidget {
                     fontSize: 14,
                     fontWeight: FontWeight.w500)),
             Text(location),
+            SizedBox(width: 80),
           ],
         ),
+        if (img != null) SizedBox(width: 10),
+        if (img != null) img!,
       ],
     );
   }
@@ -211,6 +216,47 @@ class AddressList extends StatelessWidget {
 }
 
 class AddressItem extends StatelessWidget {
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 250,
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Searching for drivers',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                'Currently for the drivers closest to you, Please wait o few munutes...',
+                textAlign: TextAlign.justify,
+              ),
+              SizedBox(height: 20.0),
+              LinearProgressIndicator(
+                color: MyColor.myYellow,
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel Search'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: MyColor.myYellow,
+                  foregroundColor: MyColor.myBlack,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   final String label;
   final String? address;
   final Widget icon;
@@ -236,7 +282,7 @@ class AddressItem extends StatelessWidget {
             )
           : null,
       onTap: () {
-        // Address item action
+        _showBottomSheet(context);
       },
     );
   }
@@ -269,7 +315,7 @@ class RideButtons extends StatelessWidget {
           SizedBox(height: 10),
           ElevatedButton(
             onPressed: () {
-              // Book ride action
+              Navigator.of(context).pushNamed('ConfirmRide');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.yellow[700],

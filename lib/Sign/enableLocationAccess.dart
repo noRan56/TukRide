@@ -9,36 +9,22 @@ class EnableLocationaccess extends StatelessWidget {
         child: Column(
           children: [
             Container(
-                child: Padding(
-                    padding: const EdgeInsets.only(top: 40, right: 290),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: ((context) => StartSignUp()))); will make it to go to homePage
-                        },
-                        child: Icon(Icons.arrow_back_ios_new_outlined,
-                            color: Color(0xff242424)),
-                        style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          padding: EdgeInsets.all(0),
-                          backgroundColor: Color(0xfff9c32b),
-                        )))),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 40, right: 290),
+                child: IconButton(
+                  icon: Image.asset('assets/images/back.png'),
+                  onPressed: () {},
+                ),
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(
                 top: 50,
               ),
               width: 161,
               height: 161,
-              decoration: BoxDecoration(
-                color: Color(0xEEE9E9E9),
-                borderRadius: BorderRadius.circular(70.0),
-              ),
               padding: EdgeInsets.all(10.0),
-              child: Icon(
-                Icons.location_on,
-                color: Color(0xFFF9C32B),
-                size: 120,
-              ),
+              child: Image.asset('assets/images/locaiton.png'),
             ),
             // SvgPicture.assets(''),
 

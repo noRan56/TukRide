@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tuk_ride/constant/MyColors.dart';
 
-class ScheduleRideScreen extends StatelessWidget {
+class SearchingScreen extends StatelessWidget {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   static const CameraPosition _kshibenKom = CameraPosition(
@@ -30,21 +30,24 @@ class ScheduleRideScreen extends StatelessWidget {
             top: 50,
             left: 16,
             right: 16,
+            bottom: 0,
             child: Container(
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.3),
-                    // spreadRadius: 2,
-                    // blurRadius: 5,
-                    // offset: Offset(0, 3),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(height: 10),
                   UserProfileSection(),
@@ -53,7 +56,6 @@ class ScheduleRideScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   AddressList(),
                   SizedBox(height: 80),
-                  RideButtons()
                 ],
               ),
             ),
@@ -76,10 +78,9 @@ class UserProfileSection extends StatelessWidget {
         Spacer(),
         IconButton(
           icon: Image.asset(
-            'assets/images/notification.png',
+            'assets/images/notificationMap.png',
             width: 24,
             height: 24,
-            color: Colors.yellow,
           ),
           onPressed: () {
             // Notification button action
@@ -124,28 +125,7 @@ class LocationSection extends StatelessWidget {
             label: 'DROP-OFF',
             location: 'Shibin El Kom',
             icon: Image.asset('assets/images/pin.png', width: 24, height: 24),
-            img: Image.asset("assets/images/icon-close-alt.png",
-                width: 20, height: 20),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 28.0),
-            child: Divider(color: Colors.grey),
-          ),
-          LocationRow(
-            label: 'DATE',
-            location: '12-4-2024',
-            img: Image.asset("assets/images/calendar_icon.png",
-                width: 20, height: 20),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 28.0),
-            child: Divider(color: Colors.grey),
-          ),
-          LocationRow(
-            label: 'TIME',
-            location: '3:00 am',
-            img: Image.asset("assets/images/clock_icon.png",
-                width: 20, height: 20),
+            img: Image.asset("assets/images/close.png", width: 20, height: 20),
           ),
         ],
       ),
@@ -156,23 +136,20 @@ class LocationSection extends StatelessWidget {
 class LocationRow extends StatelessWidget {
   final String label;
   final String location;
-  final Widget? icon;
+  final Widget icon;
   final Widget? img;
 
   const LocationRow({
     required this.label,
     required this.location,
-    this.icon,
+    required this.icon,
     this.img,
   });
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        if (icon != null) icon!,
-        SizedBox(width: 10),
+        icon,
         SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,23 +162,10 @@ class LocationRow extends StatelessWidget {
             Text(location),
           ],
         ),
-        SizedBox(width: 80),
         if (img != null) SizedBox(width: 10),
         if (img != null) img!,
       ],
     );
-    // return Card(
-    //   child: ListTile(
-    //     leading: icon != null ? icon : null,
-    //     title: Text(label,
-    //         style: TextStyle(
-    //             color: MyColor.myGrey,
-    //             fontSize: 14,
-    //             fontWeight: FontWeight.w500)),
-    //     subtitle: Text(location),
-    //     trailing: img != null ? img : null,
-    //   ),
-    // );
   }
 }
 
@@ -250,6 +214,47 @@ class AddressList extends StatelessWidget {
 }
 
 class AddressItem extends StatelessWidget {
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 250,
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Searching for drivers',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                'Currently for the drivers closest to you, Please wait o few munutes...',
+                textAlign: TextAlign.justify,
+              ),
+              SizedBox(height: 20.0),
+              LinearProgressIndicator(
+                color: MyColor.myYellow,
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel Search'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: MyColor.myYellow,
+                  foregroundColor: MyColor.myBlack,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   final String label;
   final String? address;
   final Widget icon;
@@ -274,37 +279,7 @@ class AddressItem extends StatelessWidget {
                   fontWeight: FontWeight.w500),
             )
           : null,
-      onTap: () {
-        // Address item action
-      },
-    );
-  }
-}
-
-class RideButtons extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.yellow[700],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-            ),
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 14),
-              width: double.infinity,
-              alignment: Alignment.center,
-              child: Text('Schedule Ride',
-                  style: TextStyle(fontSize: 20, color: MyColor.myBlack)),
-            ),
-          ),
-        ],
-      ),
+      onTap: () => _showBottomSheet(context),
     );
   }
 }

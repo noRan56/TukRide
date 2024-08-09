@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tuk_ride/Sign/start.dart';
 
 class VerificationSuccessful extends StatelessWidget {
   @override
@@ -6,20 +7,18 @@ class VerificationSuccessful extends StatelessWidget {
     return Scaffold(
         body: Column(children: [
       Container(
-          child: Padding(
-              padding: const EdgeInsets.only(top: 40, right: 290),
-              child: ElevatedButton(
-                  onPressed: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: ((context) => StartSignUp()))); will make it to go to homePage
-                  },
-                  child: Icon(Icons.arrow_back_ios_new_outlined,
-                      color: Color(0xff242424)),
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(0),
-                    backgroundColor: Color(0xfff9c32b),
-                  )))),
+        child: Padding(
+          padding: const EdgeInsets.only(
+              top: 40, right: 290), // Adjust the distance as needed
+          child: IconButton(
+            icon: Image.asset('assets/images/back.png'),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: ((context) => StartSignUp())));
+            },
+          ),
+        ),
+      ),
       SizedBox(height: 80.0),
       Center(
         child: Column(
@@ -28,7 +27,7 @@ class VerificationSuccessful extends StatelessWidget {
             Text(
               'Verification Successful',
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 20,
                 letterSpacing: 1.5,
                 wordSpacing: 5,
                 fontWeight: FontWeight.w500,
@@ -37,17 +36,16 @@ class VerificationSuccessful extends StatelessWidget {
             ),
             SizedBox(height: 65.0),
             Container(
-              decoration: BoxDecoration(
-                color: Color(0xFFF9C32B),
-                borderRadius: BorderRadius.circular(50.0),
-              ),
-              padding: EdgeInsets.all(10.0),
-              child: Icon(
-                Icons.check,
-                color: Color(0xFFFDFDFD),
-                size: 80,
-              ),
-            ),
+                decoration: BoxDecoration(
+                  color: Color(0xFFF9C32B),
+                  borderRadius: BorderRadius.circular(50.0),
+                ),
+                padding: EdgeInsets.all(10.0),
+                child: Image.asset(
+                  "assets/images/checked.png",
+                  width: 70,
+                  height: 70,
+                )),
             SizedBox(height: 95.0),
             FractionallySizedBox(
               widthFactor: 0.8,

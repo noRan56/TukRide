@@ -11,57 +11,70 @@ class NotificationsScreen extends StatelessWidget {
         .toList();
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        backgroundColor: Color(0xfffdfdfd),
-        elevation: 0,
-        flexibleSpace: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
                 child: Padding(
-                    padding: const EdgeInsets.only(bottom: 40),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Icon(Icons.arrow_back_ios_new_outlined,
-                            color: Color(0xff242424)),
-                        style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          padding: EdgeInsets.all(0),
-                          backgroundColor: Color(0xfff9c32b),
-                        )))),
-            Column(children: [
-              Container(
-                child: const Text('Notifications',
-                    style: TextStyle(
-                        color: Color(0xff242424),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40)),
+                  padding: const EdgeInsets.only(top: 50),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Image.asset(
+                      'assets/images/back.png',
+                    ),
+                  ),
+                ),
               ),
-              Container(
-                  height: 5,
-                  width: 300,
-                  decoration: const BoxDecoration(
-                      color: Color(0xfff9c32b),
-                      borderRadius: BorderRadius.all(Radius.circular(10)))),
-            ])
-          ],
-        ),
-      ),
-      body: ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemCount: notifications.length,
-        itemBuilder: (context, index) {
-          final notification = notifications[index];
-          return NotificationItem(
-            title: notification.title,
-            message: notification.message,
-            time: notification.time,
-            isNew: notification.isNew,
-          );
-        },
+              SizedBox(
+                width: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Column(
+                  children: [
+                    Container(
+                      child: const Text(
+                        'Notifications',
+                        style: TextStyle(
+                          color: Color(0xff242424),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 5,
+                      width: 130,
+                      decoration: const BoxDecoration(
+                        color: Color(0xfff9c32b),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.all(16.0),
+              itemCount: notifications.length,
+              itemBuilder: (context, index) {
+                final notification = notifications[index];
+                return NotificationItem(
+                  title: notification.title,
+                  message: notification.message,
+                  time: notification.time,
+                  isNew: notification.isNew,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

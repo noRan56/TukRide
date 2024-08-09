@@ -2,12 +2,15 @@
 <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+     
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
     <application
         android:label="tuk_ride"
-        android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:name="${applicationName}">
+        
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyA-_Dvwr5yUxjY7bmfnx206yX_k_qrzJ_0"/>
+               android:value="AIzaSyDH4Y9rnt-Ui5FGTT5G1ivY2tlNFc9jrAo"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

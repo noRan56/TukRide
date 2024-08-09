@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:tuk_ride/constant/MyColors.dart';
 import 'package:tuk_ride/data_layer/trip_data.dart';
+
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TripsHistoryPage extends StatefulWidget {
   @override
@@ -25,82 +29,77 @@ class _TripsHistoryPageState extends State<TripsHistoryPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          AppBar(
-            toolbarHeight: 120,
-            backgroundColor: Color.fromARGB(255, 255, 255, 255),
-            elevation: 0,
-            title: Column(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Column(
+          children: [
+            Text(
+              'Trips History',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            SizedBox(height: 10.0),
+            Container(
+                height: 5,
+                width: 150,
+                decoration: const BoxDecoration(
+                    color: Color(0xfff9c32b),
+                    borderRadius: BorderRadius.all(Radius.circular(10)))),
+            SizedBox(height: 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Trips History',
-                  style: TextStyle(color: Color(0xff242424)),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _tabController.index = 0;
+                    });
+                  },
+                  child: Text(
+                    'Upcoming',
+                    style: TextStyle(
+                      color: _tabController.index == 0
+                          ? Color(0xff242424)
+                          : Color(0xffe9e9e9),
+                    ),
+                  ),
                 ),
                 Container(
-                    height: 5,
-                    width: 150,
-                    decoration: const BoxDecoration(
-                        color: Color(0xfff9c32b),
-                        borderRadius: BorderRadius.all(Radius.circular(10)))),
-                SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _tabController.index = 0;
-                        });
-                      },
-                      child: Text(
-                        'Upcoming',
-                        style: TextStyle(
-                          color: _tabController.index == 0
-                              ? Color(0xff242424)
-                              : Color(0xffe9e9e9),
-                        ),
-                      ),
+                  height: 40,
+                  width: 5,
+                  margin: EdgeInsets.symmetric(horizontal: 8.0),
+                  decoration: const BoxDecoration(
+                    color: MyColor.myYellow,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _tabController.index = 1;
+                    });
+                  },
+                  child: Text(
+                    'Completed',
+                    style: TextStyle(
+                      color: _tabController.index == 1
+                          ? Color(0xff242424)
+                          : Color(0xffe9e9e9),
                     ),
-                    Container(
-                      height: 40,
-                      width: 5,
-                      margin: EdgeInsets.symmetric(horizontal: 8.0),
-                      decoration: const BoxDecoration(
-                        color: Color(0xfff9c32b),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _tabController.index = 1;
-                        });
-                      },
-                      child: Text(
-                        'Completed',
-                        style: TextStyle(
-                          color: _tabController.index == 1
-                              ? Color(0xff242424)
-                              : Color(0xffe9e9e9),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                buildTripList(context, upcomingTrips, showRebook: false),
-                buildTripList(context, completedTrips, showRebook: true),
-              ],
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  buildTripList(context, upcomingTrips, showRebook: false),
+                  buildTripList(context, completedTrips, showRebook: true),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -122,16 +121,23 @@ class _TripsHistoryPageState extends State<TripsHistoryPage>
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(trips[index].address),
+                Text(
+                  trips[index].address,
+                  style: TextStyle(color: Color(0xffc8c7cc)),
+                ),
                 Row(
                   children: [
-                    Icon(Icons.calendar_today, size: 14, color: Colors.grey),
+                    Image.asset('assets/images/calendar_icon.png',
+                        height: 14, color: const Color(0xffc8c7cc)),
                     SizedBox(width: 5),
-                    Text(trips[index].date),
+                    Text(trips[index].date,
+                        style: TextStyle(color: Color(0xffc8c7cc))),
                     SizedBox(width: 10),
-                    Icon(Icons.access_time, size: 14, color: Colors.grey),
+                    Image.asset('assets/images/clock_icon.png',
+                        height: 14, color: Color(0xffc8c7cc)),
                     SizedBox(width: 5),
-                    Text(trips[index].time),
+                    Text(trips[index].time,
+                        style: TextStyle(color: Color(0xffc8c7cc))),
                   ],
                 ),
                 if (showRebook)
@@ -148,14 +154,14 @@ class _TripsHistoryPageState extends State<TripsHistoryPage>
                                 Text(
                                   'Rebook',
                                   style: TextStyle(
-                                    color: Color(0xfff9c32b),
+                                    color: MyColor.myYellow,
                                     decoration: TextDecoration.underline,
-                                    decorationColor: Color(0xfff9c32b),
+                                    decorationColor: MyColor.myYellow,
                                   ),
                                 ),
-                                Icon(
-                                  Icons.arrow_forward,
-                                  size: 14,
+                                Image.asset(
+                                  'assets/images/next.png',
+                                  height: 14,
                                   color: Color(0xfff9c32b),
                                 ),
                               ],
@@ -167,12 +173,8 @@ class _TripsHistoryPageState extends State<TripsHistoryPage>
                   ),
               ],
             ),
-            trailing: Image.network(
-              trips[index].imageUrl,
-              width: 60,
-              height: 60,
-              fit: BoxFit.cover,
-            ),
+            trailing: Image.asset(trips[index].image,
+                width: 60, height: 60, fit: BoxFit.cover),
             isThreeLine: true,
             dense: true,
             onTap: () {},

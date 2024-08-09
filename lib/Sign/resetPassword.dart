@@ -13,22 +13,17 @@ class ResetPassword extends StatelessWidget {
             children: [
               ListView(shrinkWrap: true, children: [
                 Container(
-                    child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10,
-                            right: 290), // Adjust the distance as needed
-                        child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: ((context) => StartSignUp())));
-                            },
-                            child: Icon(Icons.arrow_back_ios_new_outlined,
-                                color: Color(0xff242424)),
-                            style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              padding: EdgeInsets.all(0),
-                              backgroundColor: Color(0xfff9c32b),
-                            )))),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 40, right: 290),
+                    child: IconButton(
+                      icon: Image.asset('assets/images/back.png'),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: ((context) => StartSignUp())));
+                      },
+                    ),
+                  ),
+                ),
                 Center(
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.9,

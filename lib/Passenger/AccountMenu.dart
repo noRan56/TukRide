@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tuk_ride/constant/MyColors.dart';
 
 class AccountMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-            padding: EdgeInsets.only(top: 30),
+            padding: EdgeInsets.only(top: 50),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               Container(
@@ -38,7 +39,9 @@ class AccountMenu extends StatelessWidget {
                           width: 24,
                           height: 24,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed('profial');
+                        },
                       ),
                       leading: Image.asset(
                         'assets/images/user (2).png',
@@ -169,6 +172,16 @@ class AccountMenu extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 5, horizontal: 30),
                       onTap: () {},
                     ),
+                    // SizedBox(
+                    //   height: 310,
+                    // ),
+                    // Container(
+                    //     height: 5,
+                    //     width: 180,
+                    //     decoration: const BoxDecoration(
+                    //         color: MyColor.myGrey,
+                    //         borderRadius:
+                    //             BorderRadius.all(Radius.circular(10)))),
                   ],
                 ),
               ),

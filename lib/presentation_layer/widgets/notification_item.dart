@@ -64,7 +64,8 @@ class NotificationItem extends StatelessWidget {
                 style: TextStyle(fontSize: 14, color: Color(0xffc8c7cc)),
               ),
               if (isNew)
-                Icon(Icons.circle, color: Color(0xfff9c32b), size: 12.0),
+                Image.asset('assets/images/ic_current.png',
+                    color: Color(0xfff9c32b), height: 12.0),
             ],
           ),
         ],

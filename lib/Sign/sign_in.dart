@@ -14,24 +14,21 @@ class SignInScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 40, right: 290), // Adjust the distance as needed
-                      child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: ((context) => StartSignUp())));
-                          },
-                          child: Icon(Icons.arrow_back_ios_new_outlined,
-                              color: Color(0xff242424)),
-                          style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(0),
-                            backgroundColor: Color(0xfff9c32b),
-                          )))),
-              SizedBox(
-                height: 20,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 50, right: 290), // Adjust the distance as needed
+                  child: IconButton(
+                    icon: Image.asset('assets/images/back.png'),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: ((context) => StartSignUp())));
+                    },
+                  ),
+                ),
               ),
+              // SizedBox(
+              //   height: 5,
+              // ),
               Container(
                 child: const Text('Sign In',
                     style: TextStyle(

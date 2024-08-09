@@ -65,13 +65,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 height: 24,
               ),
               onTap: () {
-                // Handle change password tap
+                Navigator.of(context)
+                    .pushReplacementNamed('ChangePasswordPage');
               },
             ),
             Divider(),
             ListTile(
               leading: Image.asset(
-                'assets/images/location (1).png',
+                'assets/images/locaition12.png',
                 height: 35,
               ),
               title: Text('Location tracking'),

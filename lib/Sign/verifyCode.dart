@@ -71,7 +71,7 @@ class _verifyCodeState extends State<verifyCode> {
                     return Padding(
                       padding: EdgeInsets.all(8.0),
                       child: SizedBox(
-                          height: 60,
+                          height: 50,
                           width: 46,
                           child: Container(
                               decoration: BoxDecoration(
