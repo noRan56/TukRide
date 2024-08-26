@@ -79,7 +79,7 @@ class UserProfileSection extends StatelessWidget {
             'assets/images/notification.png',
             width: 24,
             height: 24,
-            color: Colors.yellow,
+            color: MyColor.myYellow,
           ),
           onPressed: () {
             // Notification button action

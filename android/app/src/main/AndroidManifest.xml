@@ -7,10 +7,11 @@
 
     <application
         android:label="tuk_ride"
-        android:name="${applicationName}">
+        android:name="${applicationName}"
+        android:icon="@mipmap/launcher_icon">
         
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyDH4Y9rnt-Ui5FGTT5G1ivY2tlNFc9jrAo"/>
+               android:value="AIzaSyA-_Dvwr5yUxjY7bmfnx206yX_k_qrzJ_0"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

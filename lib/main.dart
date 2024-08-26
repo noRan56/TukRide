@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tuk_ride/Driver/NavBar/NavBar.dart';
 import 'package:tuk_ride/Driver/driver_license.dart';
+import 'package:tuk_ride/Driver/drop_off.dart';
 import 'package:tuk_ride/Driver/edit_profile.dart';
+import 'package:tuk_ride/Driver/enableLocationAccessDriver.dart';
+import 'package:tuk_ride/Driver/homeDriver.dart';
+import 'package:tuk_ride/Driver/pickup.dart';
+import 'package:tuk_ride/Driver/sign_up.dart';
 import 'package:tuk_ride/Maps/Ride_Booking.dart';
 import 'package:tuk_ride/Maps/Schedule_Ride.dart';
 import 'package:tuk_ride/NavBar/schudule.dart';
@@ -44,7 +50,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        home: OnboardingScreen(),
         theme: ThemeData(
           fontFamily: 'MPLUSRounded1c',
           textTheme: TextTheme(
@@ -74,10 +80,13 @@ class _MyAppState extends State<MyApp> {
         routes: {
           'splash': (context) => SplashScreen(),
           'signIn': (context) => SignInScreen(),
+          'signUpDriver': (context) => SignUPScreenDriver(),
           'onboardingScreen': (context) => OnboardingScreen(),
           'chooseToStart': (context) => StartSignUp(),
           'forgetPassword': (context) => ForgetPassword(),
           'EnableLocationaccess': (context) => EnableLocationaccess(),
+          'EnableLocationaccessDriver': (context) =>
+              EnableLocationaccessDriver(),
           'VerificationSuccessful': (context) => VerificationSuccessful(),
           'resetPassword': (context) => ResetPassword(),
           'verifyCode': (context) => verifyCode(),
@@ -98,7 +107,9 @@ class _MyAppState extends State<MyApp> {
           "driverLicense": (context) => DriverLicenseScreen(),
           "driverdetails": (context) => DriverDetailsPage(),
           "driverToDistance": (context) => DrivingToDistance(),
-          "feedback": (context) => FeedbackPage()
+          "feedback": (context) => FeedbackPage(),
+          'NavBarDriver': (context) => NavBarDriver(),
+          'DropOff': (context) => DropOff(),
         });
   }
 }

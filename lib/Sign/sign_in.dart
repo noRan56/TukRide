@@ -132,10 +132,7 @@ class SignInScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 20)),
                 onPressed: () {},
-                icon: Icon(
-                  Icons.g_mobiledata,
-                  color: Colors.blue,
-                ),
+                icon: Image.asset('assets/images/google.png'),
                 label: const Text('Sign In with Google',
                     style: TextStyle(
                       color: Color(0xff242424),

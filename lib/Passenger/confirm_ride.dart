@@ -432,6 +432,7 @@ class _ConfirmRideState extends State<ConfirmRide> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColor.myWhite,
       body: Stack(
         fit: StackFit.expand,
         children: [

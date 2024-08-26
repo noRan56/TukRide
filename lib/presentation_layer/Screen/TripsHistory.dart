@@ -29,6 +29,7 @@ class _TripsHistoryPageState extends State<TripsHistoryPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColor.myWhite,
       body: Padding(
         padding: const EdgeInsets.only(top: 20.0),
         child: Column(

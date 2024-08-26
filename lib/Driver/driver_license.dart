@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_final_fields, prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
@@ -48,7 +46,7 @@ class _DriverLicenseScreenState extends State<DriverLicenseScreen> {
             ),
             child: Center(
               child: Image.asset(
-                'assets/images/back_icon.png',
+                'assets/images/back.png',
                 width: 24,
                 height: 24,
               ),
@@ -291,7 +289,9 @@ class _DriverLicenseScreenState extends State<DriverLicenseScreen> {
                   ),
                   SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('verifyCode');
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFF9C32B),
                       padding: EdgeInsets.symmetric(vertical: 16),

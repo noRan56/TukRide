@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tuk_ride/Driver/sign_up.dart';
 import 'package:tuk_ride/Sign/sign_up.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -41,8 +42,8 @@ class StartSignUp extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 60, vertical: 20)),
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: ((context) => SignUpPage())));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: ((context) => SignUPScreenDriver())));
             },
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -53,10 +54,6 @@ class StartSignUp extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 SizedBox(width: 3),
-                Icon(
-                  Icons.arrow_forward,
-                  color: Color(0xfff9c32b),
-                )
               ],
             )),
         SizedBox(height: 20),

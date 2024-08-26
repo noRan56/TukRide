@@ -24,16 +24,11 @@ class _verifyCodeState extends State<verifyCode> {
                     child: Padding(
                         padding: const EdgeInsets.only(top: 40, right: 290),
                         child: ElevatedButton(
-                            onPressed: () {
-                              //   handle
-                            },
-                            child: Icon(Icons.arrow_back_ios_new_outlined,
-                                color: Color(0xff242424)),
-                            style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              padding: EdgeInsets.all(0),
-                              backgroundColor: Color(0xfff9c32b),
-                            )))),
+                          onPressed: () {
+                            //   handle
+                          },
+                          child: Image.asset('assets/images/back.png'),
+                        ))),
                 Text(
                   "Verify Code",
                   style: TextStyle(

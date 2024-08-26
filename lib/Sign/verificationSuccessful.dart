@@ -68,11 +68,6 @@ class VerificationSuccessful extends StatelessWidget {
                     ),
                     SizedBox(
                         width: 10), // Adjust the spacing between text and icon
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.black,
-                      size: 20,
-                    ),
                   ],
                 ),
                 style: ButtonStyle(

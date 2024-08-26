@@ -5,6 +5,7 @@ class HomeDriver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColor.myWhite,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -13,20 +14,19 @@ class HomeDriver extends StatelessWidget {
               backgroundImage: AssetImage('assets/images/userAvater.png'),
             ),
             Container(
-              decoration: BoxDecoration(color: MyColor.myGrey),
+              decoration: BoxDecoration(color: MyColor.myWhite),
               child: Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Online',
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: MyColor.myBlack),
                     ),
                     Switch(
-                      value: true,
-                      onChanged: (bool newValue) {},
-                      activeColor: Color(0xfff9c32B),
-                    ),
+                        value: true,
+                        onChanged: (bool newValue) {},
+                        activeColor: MyColor.myYellow),
                   ],
                 ),
               ),
@@ -34,30 +34,23 @@ class HomeDriver extends StatelessWidget {
             Stack(
               children: [
                 IconButton(
-                  icon: Icon(Icons.notifications, color: Colors.black),
+                  icon: Image.asset(
+                    'assets/images/notificationMap.png',
+                    width: 40,
+                    height: 40,
+                  ),
                   onPressed: () {},
                 ),
                 Positioned(
                   right: 10,
                   top: 10,
-                  child: Container(
-                    padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
+                  child: Text(
+                    '1',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
                     ),
-                    constraints: BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: Text(
-                      '1',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
@@ -68,28 +61,6 @@ class HomeDriver extends StatelessWidget {
         elevation: 0,
       ),
       body: RequestList(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '',
-          ),
-        ],
-        selectedItemColor: Color(0xfff9c32B),
-        unselectedItemColor: Colors.grey,
-      ),
     );
   }
 }
@@ -158,8 +129,8 @@ class RequestCard extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://via.placeholder.com/150'), // ضع رابط صورة المستخدم هنا
+                  backgroundImage:
+                      NetworkImage('https://via.placeholder.com/150'),
                 ),
                 SizedBox(width: 8.0),
                 Expanded(
@@ -185,7 +156,11 @@ class RequestCard extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Icon(Icons.circle, color: Color(0xfff9c32B)),
+                    Image.asset(
+                      'assets/images/ic_current.png',
+                      width: 30,
+                      height: 30,
+                    ),
                     Container(
                       height: 20,
                       child: VerticalDivider(
@@ -193,7 +168,11 @@ class RequestCard extends StatelessWidget {
                         thickness: 2,
                       ),
                     ),
-                    Icon(Icons.location_pin, color: Colors.black),
+                    Image.asset(
+                      'assets/images/pin.png',
+                      width: 30,
+                      height: 30,
+                    ),
                   ],
                 ),
                 SizedBox(width: 8.0),

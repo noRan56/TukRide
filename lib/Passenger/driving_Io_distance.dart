@@ -228,7 +228,7 @@ class _DrivingToDistanceState extends State<DrivingToDistance> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('feedback');
+                      Navigator.of(context).pushReplacementNamed('rideBooking');
                     },
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(

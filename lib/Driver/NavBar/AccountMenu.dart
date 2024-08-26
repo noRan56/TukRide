@@ -6,7 +6,6 @@ class AccountMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: MyColor.myWhite,
         body: Padding(
             padding: EdgeInsets.only(top: 50),
             child:
