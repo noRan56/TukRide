@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuk_ride/Driver/NavBar/NavBar.dart';
 import 'package:tuk_ride/Driver/driver_license.dart';
 import 'package:tuk_ride/Driver/drop_off.dart';
@@ -32,9 +33,13 @@ import 'package:tuk_ride/Sign/verificationSuccessful.dart';
 import 'package:tuk_ride/Sign/verifyCode.dart';
 import 'package:tuk_ride/presentation_layer/Screen/TripsHistory.dart';
 import 'package:tuk_ride/presentation_layer/Screen/notifications_screen.dart';
+import 'package:tuk_ride/shared_pref_helper.dart';
 import 'package:tuk_ride/splashScreen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefHelper.init();
+
   runApp(const MyApp());
 }
 
