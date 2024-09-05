@@ -1,6 +1,12 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuk_ride/Sign/sign_in.dart';
 import 'package:tuk_ride/Sign/start.dart';
+import 'package:http/http.dart' as http;
+import 'package:tuk_ride/shared_pref_helper.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -9,6 +15,56 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   bool agreeWithTerms = false;
+  var fNameController = TextEditingController();
+  var lNameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var mobileNumberController = TextEditingController();
+
+  Future<bool> _signup() async {
+    var request =
+        http.Request('POST', Uri.parse('http://192.168.1.9:5000/user/signup'));
+
+    request.headers['Content-Type'] = 'application/json';
+
+    request.body = '''{
+    "name": "${fNameController.text}",
+    "useremail": "${emailController.text}",
+    "userphone": "${mobileNumberController.text}",
+    "password": "${passwordController.text}",
+    "passwordConfirm": "${passwordController.text}"
+  }''';
+
+    http.StreamedResponse response = await request.send();
+
+    log(response.statusCode.toString());
+    String responseString = await response.stream.bytesToString();
+    log(responseString);
+
+    if (response.statusCode == 201) {
+      // Decode the JSON response
+      var responseJson = jsonDecode(responseString);
+
+      // Extract token and user data
+      String token = responseJson['token'];
+      String useremail = responseJson['data']['userOrDriver']['useremail'];
+      String userphone = responseJson['data']['userOrDriver']['userphone'];
+      String profile = responseJson['data']['userOrDriver']['profile'];
+
+      // Store token and user data in Shared Preferences
+
+      await SharedPrefHelper.saveData(key: 'token', value: token);
+      await SharedPrefHelper.saveData(key: 'useremail', value: useremail);
+      await SharedPrefHelper.saveData(key: 'userphone', value: userphone);
+      await SharedPrefHelper.saveData(key: 'profile', value: profile);
+
+      log("Signup successful and token/data stored in Shared Preferences");
+      return true;
+    } else {
+      log("Error: ${response.reasonPhrase}");
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       border: Border.all(color: const Color(0xffe9e9e9)),
                       borderRadius: BorderRadius.circular(10)),
                   child: TextField(
+                    controller: fNameController,
                     decoration: InputDecoration.collapsed(
                       hintText: 'First Name',
                       hintStyle:
@@ -74,12 +131,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     border: Border.all(color: const Color(0xffe9e9e9)),
                     borderRadius: BorderRadius.circular(10)),
                 child: TextField(
+                    controller: emailController,
                     decoration: InputDecoration.collapsed(
-                  hintText: 'Last Name',
-                  hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Color.fromRGBO(233, 233, 233, 1),
-                      ),
-                )),
+                      hintText: 'Email',
+                      hintStyle:
+                          Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Color.fromRGBO(233, 233, 233, 1),
+                              ),
+                    )),
               ),
               const SizedBox(height: 20),
               Container(
@@ -91,6 +150,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       borderRadius: BorderRadius.circular(10)),
                   child: TextField(
                     keyboardType: TextInputType.phone,
+                    controller: mobileNumberController,
                     maxLength: 11,
                     decoration: InputDecoration.collapsed(
                       hintText: 'Mobile Number',
@@ -109,6 +169,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
+                    controller: passwordController,
                     decoration: InputDecoration.collapsed(
                       hintText: 'Password',
                       hintStyle:
@@ -150,8 +211,11 @@ class _SignUpPageState extends State<SignUpPage> {
               ]),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('verifyCode');
+                onPressed: () async {
+                  // Navigator.of(context).pushReplacementNamed('verifyCode');
+                  await _signup()
+                      ? Navigator.of(context).pushReplacementNamed('NavBar')
+                      : null;
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder(
