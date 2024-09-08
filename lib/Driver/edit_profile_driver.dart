@@ -55,7 +55,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               SizedBox(height: 20),
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('images/11zon_cropped (1).png'),
+                backgroundImage: AssetImage('assets/images/userAvater.png'),
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: CircleAvatar(

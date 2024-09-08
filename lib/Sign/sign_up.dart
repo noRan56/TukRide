@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuk_ride/Sign/sign_in.dart';
 import 'package:tuk_ride/Sign/start.dart';
 import 'package:http/http.dart' as http;
 import 'package:tuk_ride/shared_pref_helper.dart';
+
+String url = "https://cd22-62-139-46-157.ngrok-free.app";
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -22,8 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
   var mobileNumberController = TextEditingController();
 
   Future<bool> _signup() async {
-    var request =
-        http.Request('POST', Uri.parse('http://192.168.1.9:5000/user/signup'));
+    var request = http.Request('POST', Uri.parse('$url/user/signup'));
 
     request.headers['Content-Type'] = 'application/json';
 

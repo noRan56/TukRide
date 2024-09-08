@@ -1,8 +1,62 @@
-import 'package:flutter/material.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
+import 'dart:convert';
 
-class Profial extends StatelessWidget {
-  const Profial({super.key});
+import 'dart:developer';
+import 'package:flutter/material.dart';
+
+import 'package:tuk_ride/constant/MyColors.dart';
+import 'package:tuk_ride/shared_pref_helper.dart';
+import 'package:http/http.dart' as http;
+
+String url = "https://cd22-62-139-46-157.ngrok-free.app";
+
+class Profial extends StatefulWidget {
+  Profial({super.key});
+
+  @override
+  State<Profial> createState() => _ProfialState();
+}
+
+class _ProfialState extends State<Profial> {
+  String fName = '';
+  String mobile = '';
+  String email = '';
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  Future<bool> _getData() async {
+    var request = http.Request('GET', Uri.parse('$url/user/profile'));
+    log('$url/user/profile');
+    request.headers['Content-Type'] = 'application/json';
+    request.headers['Authorization'] =
+        'Bearer ' + await SharedPrefHelper.getData(key: 'token');
+
+    log(await SharedPrefHelper.getData(key: 'token'));
+    http.StreamedResponse response = await request.send();
+
+    // log(response.statusCode.toString());
+    String responseString = await response.stream.bytesToString();
+    // log(responseString);
+
+    if (response.statusCode == 200) {
+      // Decode the JSON response
+      var responseJson = jsonDecode(responseString);
+      email = responseJson['data']['user']['useremail'];
+      mobile = responseJson['data']['user']['userphone'];
+      fName = responseJson['data']['user']['name'];
+
+      setState(() {});
+      // Extract token and user data
+      log("'==============$email==============");
+      // Store token and user data in Shared Preferences
+
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,22 +105,10 @@ class Profial extends StatelessWidget {
                         radius: 50,
                         backgroundImage:
                             AssetImage('assets/images/userAvaterpng'),
-                        // child: Align(
-                        //   alignment: Alignment.bottomRight,
-                        //   child: CircleAvatar(
-                        //     backgroundColor: Colors.white,
-                        //     radius: 15,
-                        //     // child: Icon(
-                        //     //   Icons.edit,
-                        //     //   color: Color(0xfff9c32b),
-                        //     //   size: 15,
-                        //     // ),
-                        //   ),
-                        // ),
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Aya Mohammed',
+                        fName,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -152,7 +194,7 @@ class Profial extends StatelessWidget {
                           ),
                         ),
                         trailing: Text(
-                          "Ahmed Mohammed",
+                          fName,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -173,7 +215,7 @@ class Profial extends StatelessWidget {
                           ),
                         ),
                         trailing: Text(
-                          "0123456789",
+                          mobile,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -186,7 +228,7 @@ class Profial extends StatelessWidget {
                       ),
                       ListTile(
                         leading: Text(
-                          "Email",
+                          'Email',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -194,7 +236,7 @@ class Profial extends StatelessWidget {
                           ),
                         ),
                         trailing: Text(
-                          "email@gmail.com",
+                          email,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,

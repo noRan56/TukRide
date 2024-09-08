@@ -222,43 +222,25 @@ class _ConfirmRideState extends State<ConfirmRide> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 FittedBox(
-                                  child: Text('Ahmed',
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                // IconButton(
-                                //   onPressed: () {},
-                                //   icon: Image.asset(
-                                //     'assets/images/Shape.png',
-                                //     width: 10,
-                                //     height: 10,
-                                //   ),
-                                // ),
-                                // IconButton(
-                                //   onPressed: () {},
-                                //   icon: Image.asset(
-                                //     'assets/images/Shape.png',
-                                //     width: 10,
-                                //     height: 10,
-                                //   ),
-                                // ),
-                                // IconButton(
-                                //   onPressed: () {},
-                                //   icon: Image.asset(
-                                //     'assets/images/Shape.png',
-                                //     width: 10,
-                                //     height: 10,
-                                //   ),
-                                // ),
-                                // IconButton(
-                                //   onPressed: () {},
-                                //   icon: Image.asset(
-                                //     'assets/images/Shape.png',
-                                //     width: 10,
-                                //     height: 10,
-                                //   ),
-                                // ),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pushNamed('driverdetails');
+                                    },
+                                    child: Text('Ahmed',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                )
+                                // List.generate(5, (index) {
+                                //   return Image.asset(
+                                //       index < 3
+                                //           ? ('assets/images/Shape.png')
+                                //           : ('assets/images/star black border .png'),
+                                //       height: 20,
+                                //       color: Color(0xfff9c32b));
+                                // }),
                               ],
                             ),
                           ),

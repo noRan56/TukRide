@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuk_ride/Driver/NavBar/NavBar.dart';
 import 'package:tuk_ride/Driver/driver_license.dart';
 import 'package:tuk_ride/Driver/drop_off.dart';
-import 'package:tuk_ride/Driver/edit_profile.dart';
+import 'package:tuk_ride/Driver/edit_profile_driver.dart';
 import 'package:tuk_ride/Driver/enableLocationAccessDriver.dart';
 import 'package:tuk_ride/Driver/homeDriver.dart';
 import 'package:tuk_ride/Driver/pickup.dart';
@@ -19,6 +19,7 @@ import 'package:tuk_ride/Passenger/changepass.dart';
 import 'package:tuk_ride/Passenger/confirm_ride.dart';
 import 'package:tuk_ride/Passenger/driver_details.dart';
 import 'package:tuk_ride/Passenger/driving_Io_distance.dart';
+import 'package:tuk_ride/Passenger/edit_profile.dart';
 import 'package:tuk_ride/Passenger/feedback.dart';
 import 'package:tuk_ride/Passenger/payment.dart';
 import 'package:tuk_ride/Passenger/paymentCard.dart';
@@ -28,6 +29,7 @@ import 'package:tuk_ride/Sign/enableLocationAccess.dart';
 import 'package:tuk_ride/Sign/forgetPassword.dart';
 import 'package:tuk_ride/Sign/resetPassword.dart';
 import 'package:tuk_ride/Sign/sign_in.dart';
+import 'package:tuk_ride/Sign/sign_up.dart';
 import 'package:tuk_ride/Sign/start.dart';
 import 'package:tuk_ride/Sign/verificationSuccessful.dart';
 import 'package:tuk_ride/Sign/verifyCode.dart';
@@ -55,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: OnboardingScreen(),
+        home: DriverDetailsPage(),
         theme: ThemeData(
           fontFamily: 'MPLUSRounded1c',
           textTheme: TextTheme(
@@ -108,7 +110,7 @@ class _MyAppState extends State<MyApp> {
           'ConfirmRide': (context) => ConfirmRide(),
           "history": (context) => TripsHistoryPage(),
           "profial": (context) => Profial(),
-          "editProfial": (context) => EditProfilePage(),
+          "editProfial": (context) => EditProfilePageU(),
           "driverLicense": (context) => DriverLicenseScreen(),
           "driverdetails": (context) => DriverDetailsPage(),
           "driverToDistance": (context) => DrivingToDistance(),

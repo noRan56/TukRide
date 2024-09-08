@@ -2,8 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tuk_ride/Sign/sign_up.dart';
 import 'package:tuk_ride/Sign/start.dart';
+import 'dart:convert';
+import 'dart:developer';
+import 'package:http/http.dart' as http;
+import 'package:tuk_ride/shared_pref_helper.dart';
 
-class SignInScreen extends StatelessWidget {
+import '../constant/MyColors.dart';
+
+String url = "https://cd22-62-139-46-157.ngrok-free.app";
+
+class SignInScreen extends StatefulWidget {
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+
+  Future<bool> _signin() async {
+    var request = http.Request('POST', Uri.parse('$url/user/login'));
+
+    request.headers['Content-Type'] = 'application/json';
+
+    request.body = '''{
+
+    "useremail": "${emailController.text}",
+    "password": "${passwordController.text}",
+    
+  }''';
+
+    http.StreamedResponse response = await request.send();
+
+    log(response.statusCode.toString());
+    String responseString = await response.stream.bytesToString();
+    log(responseString);
+
+    if (response.statusCode == 201) {
+      // Decode the JSON response
+      var responseJson = jsonDecode(responseString);
+      log(responseJson.toString());
+      // Extract token and user data
+      // String token = responseJson['token'];
+
+      // String userphone = responseJson['data']['userOrDriver']['userphone'];
+      // String profile = responseJson['data']['userOrDriver']['profile'];
+
+      // // Store token and user data in Shared Preferences
+
+      // await SharedPrefHelper.saveData(key: 'token', value: token);
+
+      // await SharedPrefHelper.saveData(key: 'userphone', value: userphone);
+      // await SharedPrefHelper.saveData(key: 'profile', value: profile);
+
+      // log("Signup successful and token/data stored in Shared Preferences");
+      return true;
+    } else {
+      log("Error: ${response.reasonPhrase}");
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,12 +99,12 @@ class SignInScreen extends StatelessWidget {
                   height: 5,
                   width: 180,
                   decoration: const BoxDecoration(
-                      color: Color(0xfff9c32b),
+                      color: MyColor.myYellow,
                       borderRadius: BorderRadius.all(Radius.circular(10)))),
               const Text(
                 'Hi! Welcome back',
                 style: TextStyle(
-                    color: Color(0xff656565),
+                    color: MyColor.myGrey,
                     fontSize: 13,
                     fontWeight: FontWeight.w400),
               ),
@@ -57,11 +116,11 @@ class SignInScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border.all(color: const Color(0xffe9e9e9)),
                       borderRadius: BorderRadius.circular(10)),
-                  child: const TextField(
-                    keyboardType: TextInputType.phone,
-                    maxLength: 11,
+                  child: TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: emailController,
                     decoration: InputDecoration.collapsed(
-                        hintText: 'Mobile Number',
+                        hintText: 'Email',
                         hintStyle: TextStyle(
                             color: Color(0xffe9e9e9),
                             fontSize: 17,
@@ -75,7 +134,8 @@ class SignInScreen extends StatelessWidget {
                     border: Border.all(color: const Color(0xffe9e9e9)),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const TextField(
+                  child: TextField(
+                    controller: passwordController,
                     decoration: InputDecoration.collapsed(
                         hintText: 'Password',
                         hintStyle: TextStyle(
@@ -103,9 +163,11 @@ class SignInScreen extends StatelessWidget {
                   )),
               const SizedBox(height: 10),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(
-                      'EnableLocationaccess'); // TODO : Sign in button logic
+                onPressed: () async {
+                  // Navigator.of(context).pushReplacementNamed(
+                  //     'EnableLocationaccess'); // TODO : Sign in button logic
+
+                  await _signin();
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder(
@@ -132,7 +194,11 @@ class SignInScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 20)),
                 onPressed: () {},
-                icon: Image.asset('assets/images/google.png'),
+                icon: Image.asset(
+                  'assets/images/google.png',
+                  width: 24,
+                  height: 24,
+                ),
                 label: const Text('Sign In with Google',
                     style: TextStyle(
                       color: Color(0xff242424),
