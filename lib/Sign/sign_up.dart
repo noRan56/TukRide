@@ -5,9 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuk_ride/Sign/sign_in.dart';
 import 'package:tuk_ride/Sign/start.dart';
 import 'package:http/http.dart' as http;
+import 'package:tuk_ride/core/constant/MyColors.dart';
 import 'package:tuk_ride/shared_pref_helper.dart';
 
-String url = "https://cd22-62-139-46-157.ngrok-free.app";
+import '../core/helpers/api_url.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -22,10 +23,69 @@ class _SignUpPageState extends State<SignUpPage> {
   var passwordController = TextEditingController();
   var mobileNumberController = TextEditingController();
 
-  Future<bool> _signup() async {
-    var request = http.Request('POST', Uri.parse('$url/user/signup'));
+  // Future<bool> _signup() async {
+  //   var request = http.Request('POST', Uri.parse('${UrlApi.url}/user/signup'));
 
+  //   request.headers['Content-Type'] = 'application/json';
+
+  //   request.body = '''{
+  //   "name": "${fNameController.text}",
+  //   "useremail": "${emailController.text}",
+  //   "userphone": "${mobileNumberController.text}",
+  //   "password": "${passwordController.text}",
+  //   "passwordConfirm": "${passwordController.text}"
+  // }''';
+
+  //   http.StreamedResponse response = await request.send();
+
+  //   log(response.statusCode.toString());
+  //   String responseString = await response.stream.bytesToString();
+  //   log(responseString);
+
+  //   if (response.statusCode == 201) {
+  //     var responseJson = jsonDecode(responseString);
+
+  //     // Extract token and user data
+  //     String token = responseJson['token'];
+  //     String useremail = responseJson['data']['userOrDriver']['useremail'];
+  //     String userphone = responseJson['data']['userOrDriver']['userphone'];
+  //     String profile = responseJson['data']['userOrDriver']['profile'];
+
+  //     // Store token and user data in Shared Preferences
+
+  //     await SharedPrefHelper.saveData(key: 'token', value: token);
+  //     await SharedPrefHelper.saveData(key: 'useremail', value: useremail);
+  //     await SharedPrefHelper.saveData(key: 'userphone', value: userphone);
+  //     await SharedPrefHelper.saveData(key: 'profile', value: profile);
+
+  //     log("Signup successful and token/data stored in Shared Preferences");
+  //     return true;
+  //   } else {
+  //     log("Error: ${response.reasonPhrase}");
+  //     return false;
+  //   }
+  // }
+  Future<bool> _signup() async {
+    // Check if any text field is empty
+    if (fNameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        mobileNumberController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        !agreeWithTerms) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('All fields must be filled and terms must be agreed to.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return false;
+    }
+
+    var request = http.Request('POST', Uri.parse('${UrlApi.url}/user/signup'));
     request.headers['Content-Type'] = 'application/json';
+    request.headers['Authorization'] =
+        'Bearer ' + await SharedPrefHelper.getData(key: 'token');
 
     request.body = '''{
     "name": "${fNameController.text}",
@@ -36,22 +96,16 @@ class _SignUpPageState extends State<SignUpPage> {
   }''';
 
     http.StreamedResponse response = await request.send();
-
     log(response.statusCode.toString());
     String responseString = await response.stream.bytesToString();
     log(responseString);
 
     if (response.statusCode == 201) {
-      // Decode the JSON response
       var responseJson = jsonDecode(responseString);
-
-      // Extract token and user data
       String token = responseJson['token'];
       String useremail = responseJson['data']['userOrDriver']['useremail'];
       String userphone = responseJson['data']['userOrDriver']['userphone'];
       String profile = responseJson['data']['userOrDriver']['profile'];
-
-      // Store token and user data in Shared Preferences
 
       await SharedPrefHelper.saveData(key: 'token', value: token);
       await SharedPrefHelper.saveData(key: 'useremail', value: useremail);
@@ -86,9 +140,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                 ),
               ),
-              // SizedBox(
-              //   width: 5,
-              // ),
               Container(
                 child: Text(
                   'Create Account',
@@ -120,7 +171,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintText: 'First Name',
                       hintStyle:
                           Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Color.fromRGBO(233, 233, 233, 1),
+                                color: MyColor.myGrey,
                               ),
                     ),
                   )),
@@ -128,7 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xffe9e9e9)),
+                    border: Border.all(color: MyColor.myGrey),
                     borderRadius: BorderRadius.circular(10)),
                 child: TextField(
                     controller: emailController,
@@ -136,7 +187,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintText: 'Email',
                       hintStyle:
                           Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Color.fromRGBO(233, 233, 233, 1),
+                                color: MyColor.myGrey,
                               ),
                     )),
               ),
@@ -146,7 +197,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                   decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xffe9e9e9)),
+                      border: Border.all(color: MyColor.myGrey),
                       borderRadius: BorderRadius.circular(10)),
                   child: TextField(
                     keyboardType: TextInputType.phone,
@@ -156,7 +207,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintText: 'Mobile Number',
                       hintStyle:
                           Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Color.fromRGBO(233, 233, 233, 1),
+                                color: MyColor.myGrey,
                               ),
                     ),
                   )),
@@ -174,7 +225,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintText: 'Password',
                       hintStyle:
                           Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Color.fromRGBO(233, 233, 233, 1),
+                                color: MyColor.myGrey,
                               ),
                     ),
                     obscureText: true,
@@ -203,19 +254,29 @@ class _SignUpPageState extends State<SignUpPage> {
                         'Terms & Condition',
                         style: TextStyle(
                           fontFamily: 'MPLUSRounded1c',
-                          color: Color(0xfff9c32b),
+                          color: MyColor.myYellow,
                           fontSize: 15,
                         ),
                       ),
                     ))
               ]),
               const SizedBox(height: 20),
+              //
               ElevatedButton(
                 onPressed: () async {
-                  // Navigator.of(context).pushReplacementNamed('verifyCode');
-                  await _signup()
-                      ? Navigator.of(context).pushReplacementNamed('NavBar')
-                      : null;
+                  // Call the signup function and wait for the result
+                  bool success = await _signup();
+
+                  if (success) {
+                    Navigator.of(context)
+                        .pushReplacementNamed('EnableLocationaccess');
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Signup failed! Please try again.'),
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder(

@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:ui' as ui;
+import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tuk_ride/NavBar/NavBar.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
+
+import 'package:tuk_ride/core/helpers/api_url.dart';
+import 'package:tuk_ride/shared_pref_helper.dart';
 import '../Passenger/search_bar.dart' as custom;
 
 class MyHome extends StatefulWidget {
@@ -24,6 +28,31 @@ class _MyHomeState extends State<MyHome> {
     target: LatLng(30.55283, 31.00493),
     zoom: 14.4746,
   );
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
 
   Uint8List? marketimages;
   final List<Marker> _markers = <Marker>[];
@@ -67,11 +96,31 @@ class _MyHomeState extends State<MyHome> {
         .asUint8List();
   }
 
+  Future<void> _avaliableRide() async {
+    var request = await http.Request(
+        'GET',
+        Uri.parse(
+            '${UrlApi.url}/user/availableRides?location=30.555087, 30.998436'));
+
+    request.headers['Content-Type'] = 'application/json';
+    request.headers['Authorization'] =
+        'Bearer ' + await SharedPrefHelper.getData(key: 'token');
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
 
     loadData();
+    _avaliableRide();
   }
 
   loadData() async {

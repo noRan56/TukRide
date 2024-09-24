@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
+
+import 'package:tuk_ride/core/constant/MyColors.dart';
 
 class AccountMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: MyColor.myWhite,
         body: Padding(
             padding: EdgeInsets.only(top: 50),
             child:

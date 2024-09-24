@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 
-import 'package:tuk_ride/constant/MyColors.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
+import 'package:tuk_ride/core/helpers/api_url.dart';
 import 'package:tuk_ride/shared_pref_helper.dart';
 import 'package:http/http.dart' as http;
-
-String url = "https://cd22-62-139-46-157.ngrok-free.app";
 
 class Profial extends StatefulWidget {
   Profial({super.key});
@@ -27,8 +26,8 @@ class _ProfialState extends State<Profial> {
   }
 
   Future<bool> _getData() async {
-    var request = http.Request('GET', Uri.parse('$url/user/profile'));
-    log('$url/user/profile');
+    var request = http.Request('GET', Uri.parse('${UrlApi.url}/user/profile'));
+
     request.headers['Content-Type'] = 'application/json';
     request.headers['Authorization'] =
         'Bearer ' + await SharedPrefHelper.getData(key: 'token');
@@ -128,7 +127,7 @@ class _ProfialState extends State<Profial> {
                             textAlign: TextAlign.center,
                           ),
                           subtitle: Text(
-                            ' 46 rides',
+                            ' 4 rides',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 13,

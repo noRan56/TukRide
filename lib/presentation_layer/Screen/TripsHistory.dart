@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
 import 'package:tuk_ride/data_layer/trip_data.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tuk_ride/core/helpers/api_url.dart';
+import 'package:tuk_ride/shared_pref_helper.dart';
 
 class TripsHistoryPage extends StatefulWidget {
   @override
@@ -13,6 +16,21 @@ class TripsHistoryPage extends StatefulWidget {
 class _TripsHistoryPageState extends State<TripsHistoryPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  Future<void> _tripHistory() async {
+    var request =
+        http.Request('GET', Uri.parse('${UrlApi.url}/user/upcomingRides'));
+
+    request.headers['Content-Type'] = 'application/json';
+    request.headers['Authorization'] =
+        'Bearer ' + await SharedPrefHelper.getData(key: 'token');
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
 
   @override
   void initState() {
@@ -148,7 +166,10 @@ class _TripsHistoryPageState extends State<TripsHistoryPage>
                       Row(
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed('driverToDistance');
+                            },
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [

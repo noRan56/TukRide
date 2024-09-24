@@ -5,11 +5,10 @@ import 'package:tuk_ride/Sign/start.dart';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:tuk_ride/core/helpers/api_url.dart';
 import 'package:tuk_ride/shared_pref_helper.dart';
 
-import '../constant/MyColors.dart';
-
-String url = "https://cd22-62-139-46-157.ngrok-free.app";
+import 'package:tuk_ride/core/constant/MyColors.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -21,16 +20,16 @@ class _SignInScreenState extends State<SignInScreen> {
   var passwordController = TextEditingController();
 
   Future<bool> _signin() async {
-    var request = http.Request('POST', Uri.parse('$url/user/login'));
+    var request = http.Request('POST', Uri.parse('${UrlApi.url}/user/login'));
 
     request.headers['Content-Type'] = 'application/json';
+    request.headers['Authorization'] =
+        'Bearer ' + await SharedPrefHelper.getData(key: 'token');
 
-    request.body = '''{
-
-    "useremail": "${emailController.text}",
-    "password": "${passwordController.text}",
-    
-  }''';
+    request.body = json.encode({
+      "useremail": '${emailController.text}',
+      "password": '${passwordController.text}'
+    });
 
     http.StreamedResponse response = await request.send();
 
@@ -38,19 +37,16 @@ class _SignInScreenState extends State<SignInScreen> {
     String responseString = await response.stream.bytesToString();
     log(responseString);
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       // Decode the JSON response
       var responseJson = jsonDecode(responseString);
       log(responseJson.toString());
       // Extract token and user data
-      // String token = responseJson['token'];
-
-      // String userphone = responseJson['data']['userOrDriver']['userphone'];
-      // String profile = responseJson['data']['userOrDriver']['profile'];
+      String token = responseJson['token'];
 
       // // Store token and user data in Shared Preferences
 
-      // await SharedPrefHelper.saveData(key: 'token', value: token);
+      await SharedPrefHelper.saveData(key: 'token', value: token);
 
       // await SharedPrefHelper.saveData(key: 'userphone', value: userphone);
       // await SharedPrefHelper.saveData(key: 'profile', value: profile);
@@ -114,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                   decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xffe9e9e9)),
+                      border: Border.all(color: MyColor.myGrey),
                       borderRadius: BorderRadius.circular(10)),
                   child: TextField(
                     keyboardType: TextInputType.emailAddress,
@@ -122,7 +118,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     decoration: InputDecoration.collapsed(
                         hintText: 'Email',
                         hintStyle: TextStyle(
-                            color: Color(0xffe9e9e9),
+                            color: MyColor.myGrey,
                             fontSize: 17,
                             fontWeight: FontWeight.w400)),
                   )),
@@ -131,7 +127,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xffe9e9e9)),
+                    border: Border.all(color: MyColor.myGrey),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
@@ -139,7 +135,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     decoration: InputDecoration.collapsed(
                         hintText: 'Password',
                         hintStyle: TextStyle(
-                            color: Color(0xffe9e9e9),
+                            color: MyColor.myGrey,
                             fontSize: 17,
                             fontWeight: FontWeight.w400)),
                     obscureText: true,
@@ -167,7 +163,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   // Navigator.of(context).pushReplacementNamed(
                   //     'EnableLocationaccess'); // TODO : Sign in button logic
 
-                  await _signin();
+                  await _signin()
+                      ? Navigator.of(context).pushReplacementNamed('NavBar')
+                      : null;
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder(

@@ -1,8 +1,7 @@
 import 'dart:async';
-
+import 'package:tuk_ride/core/constant/MyColors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
 
 class ScheduleRideScreen extends StatelessWidget {
   final Completer<GoogleMapController> _controller =

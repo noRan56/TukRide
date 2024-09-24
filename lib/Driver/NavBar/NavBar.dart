@@ -4,7 +4,8 @@ import 'package:tuk_ride/Driver/NavBar/NavSearch.dart';
 
 import 'package:tuk_ride/NavBar/NavList.dart';
 import 'package:tuk_ride/NavBar/NavSearch.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
+
 import 'NavHome.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';

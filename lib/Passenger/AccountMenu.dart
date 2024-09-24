@@ -1,8 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
+import 'package:http/http.dart' as http;
+import 'package:tuk_ride/core/helpers/api_url.dart';
+import 'package:tuk_ride/shared_pref_helper.dart';
 
-class AccountMenu extends StatelessWidget {
+class AccountMenu extends StatefulWidget {
+  @override
+  State<AccountMenu> createState() => _AccountMenuState();
+}
+
+class _AccountMenuState extends State<AccountMenu> {
+  Future<void> _logOut() async {
+    var request = http.Request('GET', Uri.parse('${UrlApi.url}/user/logout'));
+
+    request.headers['Content-Type'] = 'application/json';
+    request.headers['Authorization'] =
+        'Bearer ' + await SharedPrefHelper.getData(key: 'token');
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,7 +187,9 @@ class AccountMenu extends StatelessWidget {
                           width: 24,
                           height: 24,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('signIn');
+                        },
                       ),
                       leading: Image.asset(
                         'assets/images/log-out.png',
@@ -173,16 +199,6 @@ class AccountMenu extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 5, horizontal: 30),
                       onTap: () {},
                     ),
-                    // SizedBox(
-                    //   height: 310,
-                    // ),
-                    // Container(
-                    //     height: 5,
-                    //     width: 180,
-                    //     decoration: const BoxDecoration(
-                    //         color: MyColor.myGrey,
-                    //         borderRadius:
-                    //             BorderRadius.all(Radius.circular(10)))),
                   ],
                 ),
               ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override

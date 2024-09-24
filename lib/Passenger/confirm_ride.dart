@@ -6,9 +6,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:http/http.dart' as http;
-import 'package:tuk_ride/constant/MyColors.dart';
-import 'package:tuk_ride/helpers/get_location.dart';
-import 'package:tuk_ride/helpers/search_loactin_osm.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
+import 'package:tuk_ride/core/helpers/api_url.dart';
+import 'package:tuk_ride/core/helpers/get_location.dart';
+import 'package:tuk_ride/core/helpers/search_loactin_osm.dart';
+import 'package:tuk_ride/shared_pref_helper.dart';
 
 class ConfirmRide extends StatefulWidget {
   const ConfirmRide({super.key});
@@ -91,6 +93,30 @@ class _ConfirmRideState extends State<ConfirmRide> {
         zoom: 17,
       ),
     ));
+  }
+
+  Future<void> _bookRide() async {
+    var request = http.Request('POST',
+        Uri.parse('${UrlApi.url}/user/bookRide/66cfd595cf2b1aaea013d33a'));
+
+    request.headers['Content-Type'] = 'application/json';
+    request.headers['Authorization'] =
+        'Bearer ' + await SharedPrefHelper.getData(key: 'token');
+    request.body = json.encode({
+      "endLocation": {
+        "type": "Point",
+        "coordinates": [31.2348, 30.0507]
+      },
+      "fare": 50
+    });
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   Future<void> _getRoute(LatLng start, LatLng end) async {
@@ -186,15 +212,25 @@ class _ConfirmRideState extends State<ConfirmRide> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Image.asset(
-                        'assets/images/call.png',
-                        width: 40,
-                        height: 40,
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('chat');
+                        },
+                        icon: Image.asset(
+                          'assets/images/call.png',
+                          width: 40,
+                          height: 40,
+                        ),
                       ),
-                      Image.asset(
-                        'assets/images/chat.png',
-                        width: 40,
-                        height: 40,
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('chat');
+                        },
+                        icon: Image.asset(
+                          'assets/images/chat.png',
+                          width: 40,
+                          height: 40,
+                        ),
                       ),
                     ],
                   )
@@ -227,20 +263,25 @@ class _ConfirmRideState extends State<ConfirmRide> {
                                       Navigator.of(context)
                                           .pushNamed('driverdetails');
                                     },
-                                    child: Text('Ahmed',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold)),
+                                    child: Text(
+                                      'Ahmed',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: MyColor.myBlack),
+                                    ),
                                   ),
+                                ),
+                                Row(
+                                  children: List.generate(5, (index) {
+                                    return Image.asset(
+                                        index < 3
+                                            ? ('assets/images/Shape.png')
+                                            : ('assets/images/star black border .png'),
+                                        height: 10,
+                                        color: Color(0xfff9c32b));
+                                  }),
                                 )
-                                // List.generate(5, (index) {
-                                //   return Image.asset(
-                                //       index < 3
-                                //           ? ('assets/images/Shape.png')
-                                //           : ('assets/images/star black border .png'),
-                                //       height: 20,
-                                //       color: Color(0xfff9c32b));
-                                // }),
                               ],
                             ),
                           ),
@@ -271,8 +312,7 @@ class _ConfirmRideState extends State<ConfirmRide> {
                       title: Text('Pay Cash'),
                       trailing: IconButton(
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed('PaymentPage');
+                          Navigator.of(context).pushNamed('PaymentPage');
                         },
                         icon: Image.asset(
                           'assets/images/next.png',
@@ -292,8 +332,8 @@ class _ConfirmRideState extends State<ConfirmRide> {
                   SizedBox(width: 12),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed('driverToDistance');
+                      _bookRide();
+                      Navigator.of(context).pushReplacementNamed('feedback');
                     },
                     child: Text(
                       'Confirm',

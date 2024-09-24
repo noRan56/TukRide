@@ -1,34 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:tuk_ride/core/helpers/api_url.dart';
+import 'dart:convert';
+import 'dart:developer';
+import 'package:http/http.dart' as http;
+import 'package:tuk_ride/shared_pref_helper.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
 
-class ForgetPassword extends StatelessWidget {
+class ForgetPassword extends StatefulWidget {
+  @override
+  State<ForgetPassword> createState() => _ForgetPasswordState();
+}
+
+class _ForgetPasswordState extends State<ForgetPassword> {
+  var emailController = TextEditingController();
+  Future<void> _forgetPassword() async {
+    var request =
+        http.Request('POST', Uri.parse('${UrlApi.url}/user/forgotPassword'));
+    request.body = json.encode({"useremail": "${emailController.text}"});
+    request.headers['Content-Type'] = 'application/json';
+    request.headers['Authorization'] =
+        await SharedPrefHelper.getData(key: 'token');
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          decoration: BoxDecoration(
-            // color: Color(0xFFF9C32B),
-            borderRadius: BorderRadius.circular(25.0),
-          ),
+        body: SingleChildScrollView(
+      child: Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
             children: [
               Container(
                   child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 30, right: 290), // Adjust the distance as needed
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacementNamed("signIn");
-                        },
-                        child: IconButton(
-                          icon: Image.asset(
-                            'assets/images/back.png',
-                            width: 30,
-                            height: 30,
-                          ),
-                          onPressed: () {},
-                        ),
-                      ))),
+                padding: const EdgeInsets.only(
+                    top: 80, right: 290), // Adjust the distance as needed
+
+                child: IconButton(
+                  icon: Image.asset(
+                    'assets/images/back.png',
+                  ),
+                  onPressed: () {},
+                ),
+              )),
               Center(
                 child: Column(
                   children: [
@@ -37,11 +57,10 @@ class ForgetPassword extends StatelessWidget {
                       child: Text(
                         'Forget Password',
                         style: TextStyle(
-                          fontSize: 40,
+                          fontSize: 30,
                           letterSpacing: 2.5,
-                          wordSpacing: 10,
+                          wordSpacing: 2,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'MPLUSRounded1c',
                         ),
                       ),
                     ),
@@ -57,8 +76,7 @@ class ForgetPassword extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFFC8C7CC),
-                        fontFamily: 'MPLUSRounded1c',
+                        color: MyColor.myGrey,
                       ),
                     ),
                     Padding(
@@ -66,10 +84,11 @@ class ForgetPassword extends StatelessWidget {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: TextField(
+                          controller: emailController,
                           decoration: InputDecoration(
-                            hintText: "Email address or Phone Number",
+                            hintText: "Email address ",
                             hintStyle: TextStyle(
-                              color: Color(0xFFC8C7CC),
+                              color: MyColor.myGrey,
                               fontSize: 17,
                             ),
                             border: OutlineInputBorder(
@@ -89,8 +108,9 @@ class ForgetPassword extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: ElevatedButton(
                         onPressed: () {
+                          _forgetPassword();
                           Navigator.of(context)
-                              .pushReplacementNamed('resetPassword');
+                              .pushReplacementNamed('verifyCode');
                         },
                         child: const Text(
                           'Send',
@@ -122,6 +142,6 @@ class ForgetPassword extends StatelessWidget {
               ),
             ],
           )),
-    );
+    ));
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
 
 class HomeDriver extends StatelessWidget {
   @override
@@ -68,22 +68,28 @@ class HomeDriver extends StatelessWidget {
 class RequestList extends StatelessWidget {
   final List<Request> requests = [
     Request(
-      name: 'Aya Mohammed',
+      name: 'Abdo Kanoon',
       price: 40,
-      pickup: '10, Mohamed street, shibin',
-      dropoff: 'Shibin El Kom',
+      pickup: 'جامعة المنوفية',
+      dropoff: 'iti',
     ),
     Request(
-      name: 'Aya Mohammed',
+      name: 'Nouran Yasser',
       price: 40,
-      pickup: '10, Mohamed street, shibin',
-      dropoff: 'Shibin El Kom',
+      pickup: 'القصر',
+      dropoff: 'بتانون',
     ),
     Request(
-      name: 'Aya Mohammed',
+      name: 'Mohamed Abdelaziz',
       price: 40,
-      pickup: '10, Mohamed street, shibin',
-      dropoff: 'Shibin El Kom',
+      pickup: 'الموقف',
+      dropoff: 'مليج',
+    ),
+    Request(
+      name: 'israa Ali',
+      price: 40,
+      pickup: 'المحطة',
+      dropoff: 'هندسة',
     ),
   ];
 

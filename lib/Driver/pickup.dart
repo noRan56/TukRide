@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
-import 'package:tuk_ride/constant/myMap.dart';
-import 'package:tuk_ride/helpers/topbar.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
+
+import 'package:tuk_ride/core/constant/myMap.dart';
+import 'package:tuk_ride/core/helpers/topbar.dart';
 
 class PickUp extends StatelessWidget {
   @override
@@ -47,7 +48,7 @@ class PickUp extends StatelessWidget {
                           ),
                           SizedBox(width: 16.0),
                           Text(
-                            'Shah Zaman',
+                            'Dina Ali',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -90,7 +91,7 @@ class PickUp extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'Samarkand',
+                                  'كفر مصلحة',
                                   style: TextStyle(
                                     color: Color(0xff242424),
                                   ),
@@ -119,7 +120,7 @@ class PickUp extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    ' around the worled',
+                                    'المجمع',
                                     style: TextStyle(
                                       color: Color(0xff242424),
                                     ),

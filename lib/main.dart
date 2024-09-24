@@ -33,10 +33,10 @@ import 'package:tuk_ride/Sign/sign_up.dart';
 import 'package:tuk_ride/Sign/start.dart';
 import 'package:tuk_ride/Sign/verificationSuccessful.dart';
 import 'package:tuk_ride/Sign/verifyCode.dart';
+import 'package:tuk_ride/chat/chat.dart';
 import 'package:tuk_ride/presentation_layer/Screen/TripsHistory.dart';
 import 'package:tuk_ride/presentation_layer/Screen/notifications_screen.dart';
 import 'package:tuk_ride/shared_pref_helper.dart';
-import 'package:tuk_ride/splashScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: DriverDetailsPage(),
+        home: OnboardingScreen(),
         theme: ThemeData(
           fontFamily: 'MPLUSRounded1c',
           textTheme: TextTheme(
@@ -85,7 +85,6 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         routes: {
-          'splash': (context) => SplashScreen(),
           'signIn': (context) => SignInScreen(),
           'signUpDriver': (context) => SignUPScreenDriver(),
           'onboardingScreen': (context) => OnboardingScreen(),
@@ -117,6 +116,10 @@ class _MyAppState extends State<MyApp> {
           "feedback": (context) => FeedbackPage(),
           'NavBarDriver': (context) => NavBarDriver(),
           'DropOff': (context) => DropOff(),
+          'chat': (context) => ChatScreen(
+                userId: '',
+                userProfilePicUrl: '',
+              ),
         });
   }
 }

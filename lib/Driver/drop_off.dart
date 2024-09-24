@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tuk_ride/constant/myMap.dart';
-import 'package:tuk_ride/helpers/topbar.dart';
+
+import 'package:tuk_ride/core/constant/myMap.dart';
+import 'package:tuk_ride/core/helpers/topbar.dart';
 
 class DropOff extends StatefulWidget {
   @override
@@ -49,7 +50,7 @@ class _DropOffState extends State<DropOff> {
                       ),
                       SizedBox(width: 16.0),
                       Text(
-                        'dunya zad',
+                        'Dina Ali',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -81,7 +82,7 @@ class _DropOffState extends State<DropOff> {
                               ),
                             ),
                             Text(
-                              'The unknown realm',
+                              'المجمع',
                               style: TextStyle(
                                 color: Color(0xff242424),
                               ),
@@ -106,7 +107,7 @@ class _DropOffState extends State<DropOff> {
                               ),
                             ),
                             Text(
-                              'The other realm',
+                              'كفر مصلحة',
                               style: TextStyle(
                                 color: Color(0xff242424),
                               ),
@@ -129,7 +130,7 @@ class _DropOffState extends State<DropOff> {
                             ),
                           ),
                           Text(
-                            '5 min',
+                            '10 min',
                             style: TextStyle(
                               color: Color(0xff242424),
                             ),
@@ -145,7 +146,7 @@ class _DropOffState extends State<DropOff> {
                             ),
                           ),
                           Text(
-                            '2.2 km',
+                            '1.2 km',
                             style: TextStyle(
                               color: Color(0xff242424),
                             ),
@@ -161,7 +162,7 @@ class _DropOffState extends State<DropOff> {
                             ),
                           ),
                           Text(
-                            '40\$',
+                            '20\$',
                             style: TextStyle(
                               color: Color(0xff242424),
                             ),

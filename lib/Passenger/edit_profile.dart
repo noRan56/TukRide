@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:tuk_ride/constant/MyColors.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
 import 'package:http/http.dart' as http;
+import 'package:tuk_ride/core/helpers/api_url.dart';
 import 'package:tuk_ride/shared_pref_helper.dart';
-
-String url = "https://cd22-62-139-46-157.ngrok-free.app";
 
 class EditProfilePageU extends StatefulWidget {
   const EditProfilePageU({super.key});
@@ -18,6 +19,10 @@ class _EditProfilePageUState extends State<EditProfilePageU> {
   String fName = '';
   String mobile = '';
   String email = '';
+  // var lNameController = TextEditingController();
+  // var emailController = TextEditingController();
+  // var passwordController = TextEditingController();
+  // var mobileNumberController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -25,8 +30,8 @@ class _EditProfilePageUState extends State<EditProfilePageU> {
   }
 
   Future<bool> _getData() async {
-    var request = http.Request('GET', Uri.parse('$url/user/profile'));
-    log('$url/user/profile');
+    var request = http.Request('GET', Uri.parse('${UrlApi.url}/user/profile'));
+
     request.headers['Content-Type'] = 'application/json';
     request.headers['Authorization'] =
         'Bearer ' + await SharedPrefHelper.getData(key: 'token');
@@ -55,6 +60,43 @@ class _EditProfilePageUState extends State<EditProfilePageU> {
       return false;
     }
   }
+  // File? _image;
+
+  // Future<void> _pickImage() async {
+  //   final ImagePicker _picker = ImagePicker();
+  //   final XFile? pickedFile =
+  //       await _picker.pickImage(source: ImageSource.gallery);
+
+  //   if (pickedFile != null) {
+  //     setState(() {
+  //       _image = File(pickedFile.path);
+  //     });
+  //   } else {
+  //     print('No image selected.');
+  //   }
+  // }
+
+  // Future<void> _updateData() async {
+  //   var request = http.MultipartRequest(
+  //       'PATCH', Uri.parse('${UrlApi.url}/user/updateMe'));
+  //   request.fields.addAll({
+  //     'name': fName,
+  //     'useremail': email,
+  //     'userphone': mobile,
+  //   });
+  //   request.files
+  //       .add(await http.MultipartFile.fromPath('photo', '${_image?.path}'));
+  //   request.headers['Content-Type'] = 'application/json';
+  //   request.headers['Authorization'] =
+  //       'Bearer ' + await SharedPrefHelper.getData(key: 'token');
+  //   http.StreamedResponse response = await request.send();
+
+  //   if (response.statusCode == 200 || response.statusCode == 201) {
+  //     print(await response.stream.bytesToString());
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -90,20 +132,20 @@ class _EditProfilePageUState extends State<EditProfilePageU> {
               Center(
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage('assets/images/userAvater.png'),
+                  // backgroundImage: AssetImage(''),
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 15,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Image.asset(
-                          'assets/images/Grou7433.png',
-                          width: 25,
-                          height: 25,
-                        ),
-                      ),
+                      // child: IconButton(
+                      //   onPressed: () {},
+                      //   icon: Image.asset(
+                      //     'assets/images/Grou7433.png',
+                      //     width: 25,
+                      //     height: 25,
+                      //   ),
+                      // ),
                     ),
                   ),
                 ),
@@ -124,12 +166,6 @@ class _EditProfilePageUState extends State<EditProfilePageU> {
               Text(
                 fName,
               ),
-              // SizedBox(height: 20),
-              // Text('E'),
-              // SizedBox(height: 5),
-              // Text(
-              //   'Mohammed',
-              // ),
               SizedBox(height: 20),
               Text('Phone number'),
               SizedBox(height: 5),
@@ -186,7 +222,14 @@ class _EditProfilePageUState extends State<EditProfilePageU> {
               SizedBox(height: 30),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _getData();
+                    SnackBar(
+                      content: Text('Everything is saved!'),
+                      duration: Duration(seconds: 2),
+                    );
+                    Navigator.of(context).pushReplacementNamed('NavBar');
+                  },
                   child: Text('Save Changes',
                       style: TextStyle(
                         color: MyColor.myBlack,

@@ -7,9 +7,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:tuk_ride/constant/MyColors.dart';
-import 'package:tuk_ride/helpers/get_location.dart';
-import 'package:tuk_ride/helpers/search_loactin_osm.dart';
+import 'package:tuk_ride/core/constant/MyColors.dart';
+import 'package:tuk_ride/core/helpers/get_location.dart';
+import 'package:tuk_ride/core/helpers/search_loactin_osm.dart';
 
 class DrivingToDistance extends StatefulWidget {
   const DrivingToDistance({super.key});
