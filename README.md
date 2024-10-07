@@ -1,4 +1,4 @@
-# tuk_ride -like Application - Mobile App
+# TukRide -like Uber Application - Mobile App
 
 ## Tech Stack
 
